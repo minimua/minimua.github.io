@@ -7,7 +7,7 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>mujs&#39;s Space </title>
+        <title>muja&#39;s Space </title>
         <link>https://example.com/</link>
         <description>为了永远向往的自由</description>
         <generator>Hugo 0.109.0 https://gohugo.io/</generator>
@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 12 Jan 2023 22:25:38 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 13 Jan 2023 00:34:37 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://example.com/rss.xml" />
         
