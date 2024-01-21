@@ -4,13 +4,13 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">muja&#39;s Space </title>
     <subtitle type="html">为了永远向往的自由</subtitle>
-    <updated>2023-01-13T00:34:37&#43;08:00</updated>
-    <id>https://example.com/</id>
-    <link rel="alternate" type="text/html" href="https://example.com/" />
-    <link rel="self" type="application/atom&#43;xml" href="https://example.com/atom.xml" />
+    <updated>2024-01-21T16:26:00&#43;08:00</updated>
+    <id>https://www.mujaspace.com/</id>
+    <link rel="alternate" type="text/html" href="https://www.mujaspace.com/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://www.mujaspace.com/atom.xml" />
     <author>
             <name>muja</name>
-            <uri>https://example.com/</uri>
+            <uri>https://www.mujaspace.com/</uri>
             
                 <email>mujaaa@163.com</email>
             </author>
