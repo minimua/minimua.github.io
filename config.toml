@@ -227,13 +227,13 @@ uglyURLs = false
         post = "toilet"
         identifier = "life"
  
-    # [[menu.main]]
-    #    pageref = "/live/"
-    #    name = "live"
-    #    weight = 3
-    #    pre = "internal"
-    #    post = "heart"
-    #    identifier = "live"
+     [[menu.main]]
+        pageref = "/live/"
+        name = "live"
+        weight = 3
+        pre = "internal"
+        post = "heart"
+        identifier = "live"
     [[menu.main]]
         pageref = "/tech/"
         name = "tech"
