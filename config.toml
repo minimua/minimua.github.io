@@ -816,7 +816,7 @@ uglyURLs = false
     publishedDateIcon = "calendar-alt"
 
     # 是否显示修改时间
-    displayModifiedDate = true
+    displayModifiedDate = false
     # 修改时间的图标
     modifiedDateIcon = "calendar-check"
 
@@ -1002,7 +1002,7 @@ uglyURLs = false
     fontFamilyHeadings = ""
     # 代码、上标、文章元信息、文章更新徽章、文章的 Git 版本信息、极简页脚、不蒜子站点浏览计数
     # fontFamilyCode = "'Source Code Pro', 'Noto Serif SC', monospace"
-    fontFamilyCode = ""
+    fontFamilyCode = "'LXGWWenKai', 'Noto Serif SC', serif"
     # 引用
     fontFamilyQuote = ""
     # 文章目录
@@ -1062,6 +1062,7 @@ uglyURLs = false
 
     # 是否开启（全局设置）
     enableJustify = true
+    # enableJustify = false
     # 说明：文章的 Front Matter 中的 `align`
     #      的优先级高于此处
 
@@ -1149,7 +1150,7 @@ uglyURLs = false
     #      的优先级高于此处
 
     # 仓库地址
-    repoURL = ""
+    repoURL = "https://github.com/minimua/minimua.github.io"
     # 编辑地址
     repoEditURL = ""
 
@@ -1354,7 +1355,7 @@ uglyURLs = false
     # 是否开启竖直滚动
     enableOverflowY = true
     # 最大高度
-    maxHeight = 20
+    maxHeight = 80
     # 单位：em
 
     # 是否开启复制
