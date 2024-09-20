@@ -181,7 +181,7 @@ uglyURLs = false
 # name          文本（留空（""）则无）
 # weight        位置
 # pre           内链（internal）或外链（external）
-# post          图标（留空（""）则无）
+# post          图标（留空（""）则无）位于 mujaSpace\data\SVG.toml 主要来自：https://fontawesome.com/icons?d=gallery&m=free
 # identifier    图标的 Class 名
 #               （对于弹性布局的顶栏有三个特殊
 #               的值：`theme-switcher`、
@@ -241,13 +241,20 @@ uglyURLs = false
         pre = "internal"
         post = "laptop"
         identifier = "tech"   
+    # [[menu.main]]
+    #     pageref = "/link/"
+    #     name = "link"
+    #     weight = 6
+    #     pre = "internal"
+    #     post = "link"
+    #     identifier = "link"
     [[menu.main]]
-        pageref = "/link/"
-        name = "link"
+        pageref = "/tools/"
+        name = "tools"
         weight = 6
         pre = "internal"
-        post = "link"
-        identifier = "link"
+        post = "tools"
+        identifier = "tools"    
     [[menu.main]]
         pageref = "/about/"
         name = "about"
