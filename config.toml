@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://www.mujaspace.com/"
+baseURL = "https://www.voidmu.com/"
 title = "muja's Space "
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -37,7 +37,8 @@ enableGitInfo = false
 enableRobotsTXT = true
 
 # 每一分页的文章数（仅对「文章摘要」首页布局有效）
-paginate = 5
+[pagination]
+pagerSize = 5
 
 # URL 相关
 disablePathToLower = false
@@ -94,19 +95,7 @@ uglyURLs = false
     keepWhitespace = false
 
 # 作者信息
-[author]
-    # 名字
-    name = "muja"
-    # 邮箱
-    email = "mujaaa@163.com"
-    # 座右铭或简介
-    motto = "每当我带上耳机就像插上充电器"
-    # 头像
-    avatar = "/icons/head.jpg"
-    # 网站（默认值：baseURL）
-    website = "http://www.mujaspace.com/"
-    # 推特
-    twitter = "minimuaaa"
+
 
 # 相关文章
 [related]
@@ -319,6 +308,19 @@ uglyURLs = false
     # 体请到底部的字体部分配置。单位：em。
     siteBrandFontSize = 1
     siteBrandFontColor = "var(--color-contrast-high)"
+
+    # 名字
+    author = "muja"
+    # 邮箱
+    email = "mujaaa@163.com"
+    # 座右铭或简介
+    motto = "每当我带上耳机就像插上充电器"
+    # 头像
+    avatar = "/icons/head.jpg"
+    # 网站（默认值：baseURL）
+    website = "http://www.voidmu.com/"
+    # 推特
+    twitter = "minimuaaa"
 
 
     ######################################
