@@ -1,0 +1,22 @@
+# 放在博客根目录的 data 文件夹下
+# 完整路径: ~/blog/data/links.toml
+[[links]]
+title = "旅行者的随想"
+description = "旅行终将迎来终点。"
+website = "https://blog.besscroft.com"
+image = "https://blog.besscroft.com/avatar.jpg"
+
+
+[[links]]
+title = "Pseudoyu"
+description = "区块链开发工程师，喜欢探索新技术"
+website = "https://www.pseudoyu.com"
+image = "https://www.pseudoyu.com/images/author.webp"
+
+
+[[links]]
+title = "Quantum Bit"
+description = "Never stop searching, even if only for a brief flash of light."
+website = "https://www.eula.club"
+image = "https://www.eula.club/avatar.png"
+

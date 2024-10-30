@@ -226,21 +226,21 @@ uglyURLs = false
     [[menu.main]]
         pageref = "/tech/"
         name = "tech"
-        weight = 5
+        weight = 4
         pre = "internal"
         post = "laptop"
         identifier = "tech"   
-    # [[menu.main]]
-    #     pageref = "/link/"
-    #     name = "link"
-    #     weight = 6
-    #     pre = "internal"
-    #     post = "link"
-    #     identifier = "link"
+     [[menu.main]]
+         pageref = "/links/"
+         name = "link"
+         weight = 6
+         pre = "internal"
+         post = "link"
+         identifier = "links"
     [[menu.main]]
         pageref = "/tools/"
         name = "tools"
-        weight = 6
+        weight = 5
         pre = "internal"
         post = "tools"
         identifier = "tools"    
