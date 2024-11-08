@@ -1,0 +1,43 @@
+<div class="poem-container">
+    <span id="poem_sentence"></span>
+    <span id="poem_info"></span>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var script = document.createElement('script');
+    script.src = 'https://sdk.jinrishici.com/v2/browser/jinrishici.js';
+    script.charset = 'utf-8';
+    
+    script.onload = function() {
+        jinrishici.load(function(result) {
+            document.getElementById('poem_sentence').innerText = result.data.content;
+            document.getElementById('poem_info').innerText = ' —— ' + 
+                result.data.origin.dynasty + ' · ' + 
+                result.data.origin.author;
+        });
+    };
+    
+    document.body.appendChild(script);
+});
+</script>
+
+<style>
+.poem-container {
+    text-align: center;
+    padding: 0.5rem 0;
+    font-size: 0.9em;
+    color: #666;
+}
+#poem_sentence {
+    margin-right: 0.5em;
+}
+#poem_info {
+    opacity: 0.8;
+}
+
+/* 适配暗色主题 */
+[data-theme="dark"] .poem-container {
+    color: #999;
+}
+</style>
