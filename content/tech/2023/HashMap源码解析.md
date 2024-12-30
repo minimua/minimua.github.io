@@ -6,36 +6,40 @@ categories: ["tech"]
 ---
 
 ## 简介
-
 `HashMap` 是基于哈希表的 `Map` 接口实现。该实现提供了所有可选的 `Map` 操作，并允许 `null` 值和 `null` 键。（`HashMap` 类大致等同于 `Hashtable`，但它不是同步的，并且允许 `null` 值和键。）该类不保证 `Map` 中元素的顺序，尤其是不保证顺序会随着时间的推移保持不变。
-
 ## 基础知识
 ### 数组的优势和劣势
 **优势**：
-
 - **快速访问**：数组的最大优势在于它能够通过下标快速访问任意元素。访问时间复杂度为O(1)，这是由于数组是连续内存结构，计算下标即可快速定位元素。
+
 **劣势**：
 - **固定大小**：数组的大小在初始化时必须确定，无法动态扩展。这在需要存储未知数量数据时会带来不便。
-- **插入和删除操作效率低**：插入或删除元素时，数组需要移动其他元素来保持连续性，时间复杂度为O(n)。  
+- **插入和删除操作效率低**：插入或删除元素时，数组需要移动其他元素来保持连续性，时间复杂度为O(n)。
+
 ### 链表的优势和劣势
 **优势**：
 - **动态大小**：链表可以根据需要动态增长或缩减，适合存储不确定数量的数据。
 - **插入和删除操作高效**：在链表中插入或删除节点，只需改变指针方向，不需要移动其他节点，时间复杂度为O(1)（前提是已经找到位置）。
+
 **劣势**：
 - **访问效率低**：链表必须从头开始遍历才能找到指定节点，时间复杂度为O(n)。
-### 散列表——整合了两种数据结构的优势
+
+### 散列表
 
 散列表（Hash Table）结合了数组和链表的优势：
 - 使用数组来存储数据，以实现快速访问。
 - 当出现冲突时，使用链表或其他结构来存储相同位置的多个元素。
+
 ### 散列表的特点
 - **键值对存储**：散列表以键值对形式存储数据，通过键快速定位对应的值。
 - **哈希函数**：散列表依赖于哈希函数来将键映射到数组的特定位置（索引）。
 - **哈希冲突**：由于数组的固定长度，不同的键可能映射到相同的位置，称为“哈希冲突”。
+
 ### 什么是哈希
 哈希是一种将任意长度的数据通过哈希函数转换为固定长度数据的过程。常用的哈希函数具有以下特点：
 - **高效计算**：输入相同的数据总是产生相同的输出。
 - **均匀分布**：理想情况下，不同的输入数据应尽可能均匀地分布到整个哈希空间。
+
 ## HashMap原理
 
 ### HashMap的继承体系
@@ -96,160 +100,173 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 ## 源码
 
-### 核心属性
+### 类信息
 
-``` java
-public class HashMap<K,V> extends AbstractMap<K,V>  
-    implements Map<K,V>, Cloneable, Serializable {
-		/**  
-		 * The default initial capacity - MUST be a power of two. * mjy：默认table大小  
-		 */  
-		static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16  
-		  
-		/**  
-		 * The maximum capacity, used if a higher value is implicitly specified 
-		 * by either of the constructors with arguments. *
-		 * MUST be a power of two <= 1<<30. 
-		 * mjy：table最大长度  
-		 */  
-		static final int MAXIMUM_CAPACITY = 1 << 30;  
-		  
-		/**  
-		 * The load factor used when none specified in constructor. 
-		 * mjy：默认负载因子大小  
-		 */  
-		static final float DEFAULT_LOAD_FACTOR = 0.75f;  
-		  
-		/**  
-		 * The bin count threshold for using a tree rather than list for a 
-		 * bin.  Bins are converted to trees when adding an element to a 
-		 * bin with at least this many nodes. The value must be greater 
-		 * than 2 and should be at least 8 to mesh with assumptions in 
-		 * tree removal about conversion back to plain bins upon * shrinkage. 
-		 * mjy：链表树化阈值  
-		 */  
-		static final int TREEIFY_THRESHOLD = 8;  
-		  
-		/**  
-		 * The bin count threshold for untreeifying a (split) bin during a 
-		 * resize operation. Should be less than TREEIFY_THRESHOLD, and at 
-		 * most 6 to mesh with shrinkage detection under removal. 
-		 * mjy：树降级为链表的阈值  
-		 */  
-		static final int UNTREEIFY_THRESHOLD = 6;  
-		  
-		/**  
-		 * The smallest table capacity for which bins may be treeified. 
-		 * (Otherwise the table is resized if too many nodes in a bin.) 
-		 * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts 
-		 * between resizing and treeification thresholds. 
-		 * mjy：树化的另一个参数，当哈希表中的所有参数超过64，才会允许树化  
-		 */  
-		static final int MIN_TREEIFY_CAPACITY = 64;  
-		  
-		/**  
-		 * Basic hash bin node, used for most entries.  (See below for 
-		 * TreeNode subclass, and in LinkedHashMap for its Entry subclass.) 
-		 * mjy：每个键值对通过这个Node存储  
-		 */  
-		static class Node<K,V> implements Entry<K,V> {  
-		  
-		    // mjy：记录键的哈希值  
-		    final int hash;  
-		    // mjy：存储键  
-		    final K key;  
-		    // mjy：存储值  
-		    V value;  
-		    // mjy：指向下一个节点，形成链表，处理哈希冲突  
-		    Node<K,V> next;  
-		  
-		    Node(int hash, K key, V value, Node<K,V> next) {  
-		        this.hash = hash;  
-		        this.key = key;  
-		        this.value = value;  
-		        this.next = next;  
-		    }  
-		  
-		    public final K getKey()        { return key; }  
-		    public final V getValue()      { return value; }  
-		    public final String toString() { return key + "=" + value; }  
-		  
-		    public final int hashCode() {  
-		        return Objects.hashCode(key) ^ Objects.hashCode(value);  
-		    }  
-		  
-		    public final V setValue(V newValue) {  
-		        V oldValue = value;  
-		        value = newValue;  
-		        return oldValue;  
-		    }  
-		  
-		    public final boolean equals(Object o) {  
-		        if (o == this)  
-		            return true;  
-		        if (o instanceof Map.Entry) {  
-		            Entry<?,?> e = (Entry<?,?>)o;  
-		            if (Objects.equals(key, e.getKey()) &&  
-		                Objects.equals(value, e.getValue()))  
-		                return true;  
-		        }  
-		        return false;  
-		    }  
-		}
-
-		/* ---------------- Fields -------------- */  
-  
-		/**  
-		 * The table, initialized on first use, and resized as 
-		 * necessary. When allocated, length is always a power of two. 
-		 * (We also tolerate length zero in some operations to allow 
-		 * bootstrapping mechanics that are currently not needed.) 
-		 * mjy：哈希表，初始化时机？  
-		 */  
-		transient Node<K,V>[] table;  
-  
-		/**  
-		 * Holds cached entrySet(). Note that AbstractMap fields are used 
-		 * for keySet() and values(). 
-		 */
-		 transient Set<Entry<K,V>> entrySet;  
-  
-		/**  
-		 * The number of key-value mappings contained in this map. 
-		 * mjy：当前哈希表中元素个数  
-		 */  
-		transient int size;  
-  
-		/**  
-		 * The number of times this HashMap has been structurally modified 
-		 * Structural modifications are those that change the number of mappings in 
-		 * the HashMap or otherwise modify its internal structure (e.g., 
-		 * rehash).  This field is used to make iterators on Collection-views of 
-		 * the HashMap fail-fast.  (See ConcurrentModificationException). 
-		 * mjy：当前哈希表结构修改次数  
-		 */  
-		transient int modCount;  
-		  
-		/**  
-		 * The next size value at which to resize (capacity * load factor). 
-		 * mjy：扩容阈值，当哈希表中的元素超过阈值，出发扩容  
-		 * @serial  
-		 */  
-		// (The javadoc description is true upon serialization.  
-		// Additionally, if the table array has not been allocated, this  
-		// field holds the initial array capacity, or zero signifying  
-		// DEFAULT_INITIAL_CAPACITY.)  
-		int threshold;  
-		  
-		/**  
-		 * The load factor for the hash table. 
-		 * mjy：负载因子，通过负载因子计算阈值， threshold = capacity * loadFactor  
-		 * @serial  
-		 */  
-		final float loadFactor;
-    }
-
+```java
+public class HashMap<K,V> extends AbstractMap<K,V> 
+	implements Map<K,V>,Cloneable,Serializable {}
 ```
+### 核心属性
+HashMap1.8的底层是数组+链表+红黑树，每个数组元素其实是链表的头节点，链表过长就会转为红黑树。其中每个节点底层是用Node对象实现的，Node中有hash，key，value，next节点几个属性。
+
+#### 静态变量
+
+```java
+/**  
+ * The default initial capacity - MUST be a power of two. 
+ * mjy：默认table大小  
+ */  
+static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16  
+  
+/**  
+ * The maximum capacity, used if a higher value is implicitly specified 
+ * by either of the constructors with arguments. *
+ * MUST be a power of two <= 1<<30. 
+ * mjy：table最大长度  
+ */  
+static final int MAXIMUM_CAPACITY = 1 << 30;  
+  
+/**  
+ * The load factor used when none specified in constructor. 
+ * mjy：默认负载因子大小  
+ */  
+static final float DEFAULT_LOAD_FACTOR = 0.75f;  
+  
+/**  
+ * The bin count threshold for using a tree rather than list for a 
+ * bin.  Bins are converted to trees when adding an element to a 
+ * bin with at least this many nodes. The value must be greater 
+ * than 2 and should be at least 8 to mesh with assumptions in 
+ * tree removal about conversion back to plain bins upon * shrinkage. 
+ * mjy：链表树化阈值  
+ */  
+static final int TREEIFY_THRESHOLD = 8;  
+  
+/**  
+ * The bin count threshold for untreeifying a (split) bin during a 
+ * resize operation. Should be less than TREEIFY_THRESHOLD, and at 
+ * most 6 to mesh with shrinkage detection under removal. 
+ * mjy：树降级为链表的阈值  
+ */  
+static final int UNTREEIFY_THRESHOLD = 6;  
+  
+/**  
+ * The smallest table capacity for which bins may be treeified. 
+ * (Otherwise the table is resized if too many nodes in a bin.) 
+ * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts 
+ * between resizing and treeification thresholds. 
+ * mjy：树化的另一个参数，当哈希表中的所有参数超过64，才会允许树化  
+ */  
+static final int MIN_TREEIFY_CAPACITY = 64;  
+```
+
+
+#### 静态内部类
+
+```java
+static class Node<K,V> implements Entry<K,V> {  
+		  
+	// mjy：记录键的哈希值  
+	final int hash;  
+	// mjy：存储键  
+	final K key;  
+	// mjy：存储值  
+	V value;  
+	// mjy：指向下一个节点，形成链表，处理哈希冲突  
+	Node<K,V> next;  
+  
+	Node(int hash, K key, V value, Node<K,V> next) {  
+		this.hash = hash;  
+		this.key = key;  
+		this.value = value;  
+		this.next = next;  
+	}  
+  
+	public final K getKey()        { return key; }  
+	public final V getValue()      { return value; }  
+	public final String toString() { return key + "=" + value; }  
+  
+	public final int hashCode() {  
+		return Objects.hashCode(key) ^ Objects.hashCode(value);  
+	}  
+  
+	public final V setValue(V newValue) {  
+		V oldValue = value;  
+		value = newValue;  
+		return oldValue;  
+	}  
+  
+	public final boolean equals(Object o) {  
+		if (o == this)  
+			return true;  
+		if (o instanceof Map.Entry) {  
+			Entry<?,?> e = (Entry<?,?>)o;  
+			if (Objects.equals(key, e.getKey()) &&  
+				Objects.equals(value, e.getValue()))  
+				return true;  
+		}  
+		return false;  
+	}  
+}
+```
+
+
+#### 成员变量
+
+```java
+/* ---------------- Fields -------------- */  
+  
+/**  
+ * The table, initialized on first use, and resized as 
+ * necessary. When allocated, length is always a power of two. 
+ * (We also tolerate length zero in some operations to allow 
+ * bootstrapping mechanics that are currently not needed.) 
+ * mjy：哈希表，初始化时机？  
+ */  
+transient Node<K,V>[] table;  
+
+/**  
+ * Holds cached entrySet(). Note that AbstractMap fields are used 
+ * for keySet() and values(). 
+ */
+ transient Set<Entry<K,V>> entrySet;  
+
+/**  
+ * The number of key-value mappings contained in this map. 
+ * mjy：当前哈希表中元素个数  
+ */  
+transient int size;  
+
+/**  
+ * The number of times this HashMap has been structurally modified 
+ * Structural modifications are those that change the number of mappings in 
+ * the HashMap or otherwise modify its internal structure (e.g., 
+ * rehash).  This field is used to make iterators on Collection-views of 
+ * the HashMap fail-fast.  (See ConcurrentModificationException). 
+ * mjy：当前哈希表结构修改次数  
+ */  
+transient int modCount;  
+  
+/**  
+ * The next size value at which to resize (capacity * load factor). 
+ * mjy：扩容阈值，当哈希表中的元素超过阈值，出发扩容  
+ * @serial  
+ */  
+// (The javadoc description is true upon serialization.  
+// Additionally, if the table array has not been allocated, this  
+// field holds the initial array capacity, or zero signifying  
+// DEFAULT_INITIAL_CAPACITY.)  
+int threshold;  
+  
+/**  
+ * The load factor for the hash table. 
+ * mjy：负载因子，通过负载因子计算阈值， threshold = capacity * loadFactor  
+ * @serial  
+ */  
+final float loadFactor;
+```
+
+
 
 ### 构造方法
 
@@ -263,7 +280,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
  * @param  initialCapacity the initial capacity  
  * @param  loadFactor      the load factor  
  * @throws IllegalArgumentException if the initial capacity is negative  
- *         or the load factor is nonpositive */
+ *         or the load factor is nonpositive 
+ **/
  public HashMap(int initialCapacity, float loadFactor) {  
     // mjy：一些校验，capacity必须大于0，最大值max  
     if (initialCapacity < 0)  
@@ -275,7 +293,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     if (loadFactor <= 0 || Float.isNaN(loadFactor))  
         throw new IllegalArgumentException("Illegal load factor: " +  
                                            loadFactor);  
-    this.loadFactor = loadFactor;  
+    this.loadFactor = loadFactor;
+    // 扩容阈值   
     this.threshold = tableSizeFor(initialCapacity);  
 }  
   
@@ -339,7 +358,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
 }
 ```
 
-### put方法分析
+### 核心方法
+#### put方法分析
 
 **核心是putVal()**
 1. 如果定位到的数组位置没有元素 就直接插入。
@@ -427,8 +447,10 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                 /**  
                  * mjy：将p移动到下个节点  
                  * e = p.next  
-                 * e != null                 * p = e ==》p.next  
-                 */                p = e;  
+                 * e != null                 
+                 * p = e ==》p.next  
+                 */                
+                p = e;  
             }  
         }  
         // mjy：找到已经存在的节点，需要替换  
@@ -448,7 +470,35 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     afterNodeInsertion(evict);  
     return null;}
 ```
-### resize方法分析
+
+**hash方法**
+`h >>> 16`的意义：
+如果没有右移，`key.hashCode()`返回的hash相同的话，再计算数组下标，使用 (n-1) & hash，如果n也就是数组长度比较小时，n的高位全是0，使用且运算就会导致只用了hash的低位。
+使用右移加上异或的处理后，减少了返回的hash相同的可能性。
+
+``` java
+/**   
+ * mjy：哈希算法，返回key的hash值
+ * 作用：对键的原始哈希码hashCode()进一步处理（让key的hash值的高16位也参与路由运算），
+ * 使哈希值更加分散，减少哈希冲突的概率  
+ * 
+ * 假设key的hashCode为十六进制：0x12345678
+ * 原始hashcode：0x12345678 = 0001 0010 0011 0100 0101 0110 0111 1000
+ * 右移16位：    0x00001234 = 0000 0000 0000 0000 0001 0010 0011 0100
+ * 异或运算 0x12345678 ^ 0x00001234
+ *   0001 0010 0011 0100 0101 0110 0111 1000 
+ *   0000 0000 0000 0000 0001 0010 0011 0100 
+ * = 0001 0010 0011 0100 0100 0100 0100 1100
+ */
+static final int hash(Object key) {  
+    int h;  
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);  
+}
+```
+
+
+#### resize方法分析
+扩容方法
 
 ``` java
 
@@ -583,7 +633,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 
 ```
-### get方法分析
+#### get方法分析
 核心是getNode
 
 ``` java
@@ -647,7 +697,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 
 ```
-### remove方法分析
+#### remove方法分析
 核心是removeNode
 
 ``` java
@@ -736,10 +786,10 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 ```
 
-
-
 ## 总结
 HashMap1.8的底层是数组+链表+红黑树，每个数组元素其实是链表的头节点，链表过长就会转为红黑树。
+
 其中每个节点底层是用Node对象实现的，Node中有hash，key，value，next节点几个属性。
 HashMap在put的时候，会先判断数组是否为空，如果为空会先初始化为16，这是一个延时初始化。然后回通过寻址算法和key的hash值，找到它的下标位置，如果这个位置为空就直接插入，不为空会判断这个节点是否为红黑树，如果是红黑树就调用红黑树的插入方法，否则就是链表，就会插入链表的尾部。这个过程中都会判断存在的key和新的要插入的key是否完全相等，完全相等就会直接覆盖。插入完成后，会判断HashMap中的元素数量是否超过阈值，如果超过了就会触发扩容。
+
 扩容每次都会扩容为原来的2倍，会创建一个新数组长度是原来的2倍，把原来数组中的数据挪动到新的数组中，扩容会进行一个rehash的操作，元素可能会停在原来的位置，可能会移动到原始位置+扩容的大小的位置。

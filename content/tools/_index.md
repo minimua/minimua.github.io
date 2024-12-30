@@ -9,19 +9,19 @@ date : 2024-08-01T22:00:00+08:00
 
 [👨🏻‍💻我的工具](https://tools.voidmu.com/)
 
-## 主要设备
+## 硬件设备
 
 ###  💻电脑及配件
 
 - **联想（Lenovo）拯救者Y7000P（2019），i5-9300H，16G，1T，1660Ti**
 - **keycool/凯酷**，探索白套件，KC84-RGB灯-三模；TTC静音茶轴，程序员HelloWorld键帽
 - **Logitech PEBBLE 鼠标，绿色**，主力鼠标
-- **雷蛇（Razer）鼠标**
-- 
+- **雷蛇（Razer）炼狱蝰蛇V2X无线鼠标**
+- 倍思Type-C扩展坞
 
 ### 📱手机及平板
 
-- **Apple iPhone 15 Pro 黑色色，256GB**，主力手机
+- **Apple iPhone 15 Pro 黑色，256GB**，主力手机
 - **Xiaomi 11 512GB**
 - ~~**Apple iPad mini4 (第三代)，128GB**，上学时微博抽奖中的，现在不怎么用了~~
 
@@ -29,11 +29,13 @@ date : 2024-08-01T22:00:00+08:00
 
 - **Sony DSC-RX100M6，黑色卡片机**
 
-### 🎧音箱及耳机
+### 🎧音乐设备
 
 - **Sony WH-1000XM4  降噪耳机**
 - **B&O Beosound A1 二代无线**
 - **巫单曲人生W CD播放机**
+- **百灵达UMC22声卡**，我也是个rapper（x
+- **EM-91C电容麦**
 
 ### 📦​存储设备
 
@@ -49,7 +51,7 @@ date : 2024-08-01T22:00:00+08:00
 
 ### 🛠 系统拓展
 
--  snipaste 截图工具 https://zh.snipaste.com/
+-  [snipaste 截图工具](https://zh.snipaste.com/)
 -  
 
 ### 📁 文件管理
@@ -71,7 +73,6 @@ date : 2024-08-01T22:00:00+08:00
   - **AdGuard**，去广告插件
   - **MetaMask**，钱包插件
 
-  
 
 ### 🧰 实用工具
 
@@ -85,7 +86,7 @@ date : 2024-08-01T22:00:00+08:00
 
 - **Typora**，主要 Markdown 编辑器
 - **Obsidian**，因为更好的插件生态和 markdown 编辑体验
-- **Notion**，笔记
+- **Notion**，更适合用作知识库
 - **Office 365**，文档/PPT/表格处理工具
 
 ### 👨🏻‍💻 开发工具
@@ -96,9 +97,11 @@ date : 2024-08-01T22:00:00+08:00
     - **IDE Eval Reset**，激活重置
     - **WakaTime**，用来记录编码项目、语言和所用时间
   - **VS Code**，代码编辑工具，辅助开发
-  - **Sublime Text**
+  - **Sublime Text**，记事本++
+  - **Cursor**，AI出场，谁与争锋！
 - 终端工具
-  - Final shell
+  - Final shell，国产免费
+  - Termius
 - 数据库管理
   - **Navicat Premium 15**，必备的数据库管理工具
 - 接口调试
@@ -111,7 +114,7 @@ date : 2024-08-01T22:00:00+08:00
   - **GitHub**
   - **GitLab**，工作项目通过公司 GitLab 进行管理
 - 实用工具
-  - **DevToys**，微软的开发者工具 https://devtoys.app/
+  - **[DevToys](https://devtoys.app/)**，微软的开发者工具 
 
 ### 📷 图片视频
 
